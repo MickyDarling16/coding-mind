@@ -107,15 +107,30 @@ def player_turn():
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
                 # button click occured
                 # Grab the current position of mouse here
-                pos = 0
+                pos = pygame.mouse.get_pos()
                 if green.selected(pos): # green button was selected
                     green.update(SCREEN) # illuminate button
                     players_sequence.append("green") # add to player sequence
                     check_sequence(players_sequence) # check if player choice was correct
                     turn_time = time.time() # reset timer
+                elif red.selected(pos): # green button was selected
+                    red.update(SCREEN) # illuminate button
+                    players_sequence.append("red") # add to player sequence
+                    check_sequence(players_sequence) # check if player choice was correct
+                    turn_time = time.time() # reset timer
+                elif blue.selected(pos): # green button was selected
+                    blue.update(SCREEN) # illuminate button
+                    players_sequence.append("blue") # add to player sequence
+                    check_sequence(players_sequence) # check if player choice was correct
+                    turn_time = time.time() # reset timer
+                else:
+                    yellow.update(SCREEN) # illuminate button
+                    players_sequence.append("yellow") # add to player sequence
+                    check_sequence(players_sequence) # check if player choice was correct
+                    turn_time = time.time() # reset timer
 
             # Check other three options
-            # If player does not select a button within 3 seconds then the game closes
+        # If player does not select a button within 3 seconds then the game closes
     if not time.time() <= turn_time + 3:
         game_over()
 
@@ -144,8 +159,8 @@ while True:
             quit()
     # pygame.display.update()
     draw_board() # draws buttons onto pygame screen
-    cpu_turn() # cpu randomly chooses a new color
     repeat_cpu_sequence() # repeats cpu sequence if it's not empty
-    # player_turn() # player tries to recreate cpu sequence
+    cpu_turn() # cpu randomly chooses a new color
+    player_turn() # player tries to recreate cpu sequence
     pygame.time.wait(1000) # waits one second before repeating cpu sequence
     clock.tick(60)

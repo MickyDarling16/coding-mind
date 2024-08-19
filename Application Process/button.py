@@ -35,6 +35,11 @@ class Button(pygame.sprite.Sprite):
         Used to check if given button is clicked/selected by player
         '''
         # Check if button was selected. Pass in mouse_pos.
+        if mouse_pos[0] >= self.rect.x and mouse_pos[0] <= self.rect.x + 230:
+            if mouse_pos[1] >= self.rect.y and mouse_pos[1] <= self.rect.y + 230:
+                self.clicked = True
+                return self.clicked
+        self.clicked = False
     def update(self, screen):
         '''
         Illuminates button selected and plays corresponding sound.
@@ -46,12 +51,12 @@ class Button(pygame.sprite.Sprite):
         # blit the image here so it is visible to the player
         screen.blit(self.image, self.rect)
         # Play sound
-        pygame.mixer.Sound.play(self.sound, 0)
+        self.sound.play()
         pygame.display.update() # update the display with illuminated button
 
-        pygame.time.wait(500) # Duration of illumation
+        pygame.time.wait(200) # Duration of illumation
 
         # turn off illuminated button
         self.image.fill(self.color_off)
         screen.blit(self.image, self.rect)
-        pygame.display.update()
+        pygame.display.update(self.rect)
