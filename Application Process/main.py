@@ -29,14 +29,14 @@ YELLOW_OFF = (227, 227, 0)
 # Pass in respective sounds for each color
 GREEN_SOUND = pygame.mixer.Sound("./sounds/bell1.mp3") # bell1
 RED_SOUND = pygame.mixer.Sound("./sounds/bell2.mp3") # bell2
-BLUE_SOUND = pygame.mixer.Sound("./sounds/bell3.mp3") # bell3
-YELLOW_SOUND = pygame.mixer.Sound("./sounds/bell4.mp3") # bell4
+YELLOW_SOUND = pygame.mixer.Sound("./sounds/bell3.mp3") # bell4
+BLUE_SOUND = pygame.mixer.Sound("./sounds/bell4.mp3") # bell3
 
 # Button Sprite Objects
-green = Button(GREEN_ON, GREEN_OFF, GREEN_SOUND, 10, 10)
-red = Button(RED_ON, RED_OFF, RED_SOUND, 260, 10)
-yellow = Button(YELLOW_ON, YELLOW_OFF, YELLOW_SOUND, 10, 260)
-blue = Button(BLUE_ON, BLUE_OFF, BLUE_SOUND, 260, 260)
+green = Button("white", GREEN_OFF, GREEN_SOUND, 10, 10)
+red = Button("white", RED_OFF, RED_SOUND, 260, 10)
+yellow = Button("white", YELLOW_OFF, YELLOW_SOUND, 10, 260)
+blue = Button("white", BLUE_OFF, BLUE_SOUND, 260, 260)
 
 # Variables
 colors = ["green", "red", "blue", "yellow"]
@@ -50,8 +50,8 @@ def draw_board():
     # Call the draw method on all four button objects
     green.draw(screen=SCREEN)
     red.draw(screen=SCREEN)
-    blue.draw(screen=SCREEN)
     yellow.draw(screen=SCREEN)
+    blue.draw(screen=SCREEN)
 
 
 def cpu_turn():
@@ -65,8 +65,14 @@ def cpu_turn():
     # CPU Blink color to notify user choice to click
     if choice == "green":
         green.update(SCREEN)
-    # Check other three color options
 
+    # Check other three color options
+    elif choice == "red":
+        red.update(SCREEN)
+    elif choice == "blue":
+        blue.update(SCREEN)
+    else:
+        yellow.update(SCREEN)
 
 def repeat_cpu_sequence():
     '''
@@ -82,7 +88,7 @@ def repeat_cpu_sequence():
                 blue.update(SCREEN)
             else:
                 yellow.update(SCREEN)
-    pygame.time.wait(500)
+            pygame.time.wait(500)
 
 
 def player_turn():
@@ -136,10 +142,10 @@ while True:
             pygame.display.quit()
             pygame.quit()
             quit()
-    pygame.display.update()
+    # pygame.display.update()
     draw_board() # draws buttons onto pygame screen
-    # repeat_cpu_sequence() # repeats cpu sequence if it's not empty
-    # cpu_turn() # cpu randomly chooses a new color
+    cpu_turn() # cpu randomly chooses a new color
+    repeat_cpu_sequence() # repeats cpu sequence if it's not empty
     # player_turn() # player tries to recreate cpu sequence
     pygame.time.wait(1000) # waits one second before repeating cpu sequence
     clock.tick(60)
