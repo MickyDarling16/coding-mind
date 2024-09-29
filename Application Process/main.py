@@ -15,16 +15,16 @@ pygame.display.set_caption("Simon Says")
 
 #Colors
 GREEN_ON = (0, 255, 0)
-GREEN_OFF = (0, 227, 0)
+GREEN_OFF = (0, 210, 0)
 
 RED_ON = (255, 0, 0)
-RED_OFF = (227, 0, 0)
+RED_OFF = (210, 0, 0)
 
 BLUE_ON = (0, 0, 255)
-BLUE_OFF = (0, 0, 227)
+BLUE_OFF = (0, 0, 210)
 
 YELLOW_ON = (255, 255, 0)
-YELLOW_OFF = (227, 227, 0)
+YELLOW_OFF = (210, 210, 0)
 
 # Pass in respective sounds for each color
 GREEN_SOUND = pygame.mixer.Sound("./sounds/bell1.mp3") # bell1
@@ -33,10 +33,10 @@ YELLOW_SOUND = pygame.mixer.Sound("./sounds/bell3.mp3") # bell4
 BLUE_SOUND = pygame.mixer.Sound("./sounds/bell4.mp3") # bell3
 
 # Button Sprite Objects
-green = Button("white", GREEN_OFF, GREEN_SOUND, 10, 10)
-red = Button("white", RED_OFF, RED_SOUND, 260, 10)
-yellow = Button("white", YELLOW_OFF, YELLOW_SOUND, 10, 260)
-blue = Button("white", BLUE_OFF, BLUE_SOUND, 260, 260)
+green = Button(GREEN_ON, GREEN_OFF, GREEN_SOUND, 10, 10)
+red = Button(RED_ON, RED_OFF, RED_SOUND, 260, 10)
+yellow = Button(YELLOW_ON, YELLOW_OFF, YELLOW_SOUND, 10, 260)
+blue = Button(BLUE_ON, BLUE_OFF, BLUE_SOUND, 260, 260)
 
 # Variables
 colors = ["green", "red", "blue", "yellow"]
@@ -151,13 +151,15 @@ def game_over():
     quit()
 
 # Game Loop
+
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.display.quit()
             pygame.quit()
             quit()
-    # pygame.display.update()
+    pygame.display.update()
+    # pygame.time.wait(4000) # waits one second before repeating cpu sequence
     draw_board() # draws buttons onto pygame screen
     repeat_cpu_sequence() # repeats cpu sequence if it's not empty
     cpu_turn() # cpu randomly chooses a new color

@@ -21,6 +21,9 @@ class Button(pygame.sprite.Sprite):
         # Assign x, y coordinates to the top left of the sprite
         self.rect.topleft = (rect_pos_x, rect_pos_y) # Position of each sprite
 
+        self.x = rect_pos_x
+        self.y = rect_pos_y
+
         self.clicked = False
 
     def draw(self, screen):
@@ -28,28 +31,28 @@ class Button(pygame.sprite.Sprite):
         Draws button sprite onto pygame window when called
         '''
         # blit image here
-        screen.blit(self.image, self.rect) # (object to display, pos to display it)
+        screen.blit(self.image, (self.x, self.y)) # (object to display, pos to display it)
         
     def selected(self, mouse_pos):
         '''
         Used to check if given button is clicked/selected by player
         '''
-        # Check if button was selected. Pass in mouse_pos.
-        if mouse_pos[0] >= self.rect.x and mouse_pos[0] <= self.rect.x + 230:
-            if mouse_pos[1] >= self.rect.y and mouse_pos[1] <= self.rect.y + 230:
-                self.clicked = True
-                return self.clicked
+        if self.rect.collidepoint(mouse_pos):
+            self.clicked = True
+            return self.clicked
         self.clicked = False
+
     def update(self, screen):
         '''
         Illuminates button selected and plays corresponding sound.
         Sets button color back to default color after being illuminated.
         '''
         # Illuminate button by filling color here
+
         self.image.fill(self.color_on)
 
         # blit the image here so it is visible to the player
-        screen.blit(self.image, self.rect)
+        screen.blit(self.image, (self.x, self.y))
         # Play sound
         self.sound.play()
         pygame.display.update() # update the display with illuminated button
@@ -58,5 +61,5 @@ class Button(pygame.sprite.Sprite):
 
         # turn off illuminated button
         self.image.fill(self.color_off)
-        screen.blit(self.image, self.rect)
+        screen.blit(self.image, (self.x, self.y))
         pygame.display.update(self.rect)
